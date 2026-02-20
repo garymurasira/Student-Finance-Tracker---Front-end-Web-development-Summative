@@ -1,0 +1,306 @@
+<!-- Settings Page -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="./styles/Settings.css">
+  <link rel="stylesheet" href="./styles/navbar.css">
+</head>
+
+<body>
+  <nav>
+    <span><img class="logo" src="./assets/logo.png" alt="logo" width="55px"></span>
+    <h1>FinTrack</h1>
+
+    <!-- Desktop Navigation Links -->
+    <ul class="nav-links">
+      <li><a href="./Dashboard.html">Dashboard</a></li>
+      <li><a href="./Transaction.html">Transactions</a></li>
+      <li><a href="./index.html">About</a></li>
+      <li><a href="./Settings.html" class="active">Settings</a></li>
+    </ul>
+
+    <!-- Mobile Hamburger Menu -->
+    <div class="hamburger-menu" id="hamburgerMenu" aria-label="Menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="sliding-panel" id="slidingPanel">
+      <div class="panel-header">
+        <h2>Menu</h2>
+        <button class="close-btn" id="closeBtn">&times;</button>
+      </div>
+      <ul class="menu-links">
+        <li><a href="./Dashboard.html">Dashboard</a></li>
+        <li><a href="./Transaction.html">Transactions</a></li>
+        <li><a href="./index.html">About</a></li>
+        <li><a href="./Settings.html" class="active">Settings</a></li>
+      </ul>
+    </div>
+  </nav>
+  <hr>
+
+  <main class="container">
+    <section class="settings-section" aria-labelledby="general-settings-heading">
+      <h2 id="general-settings-heading">General Settings</h2>
+      <div class="settings-grid">
+        <article class="setting-card">
+          <h3>Currency</h3>
+          <label for="currency">Select Currency:</label>
+          <select id="currency">
+            <option value="RWF" selected>RWF</option>
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="JPY">JPY (¥)</option>
+          </select>
+        </article>
+        <article class="setting-card">
+          <h3>Budget Cap</h3>
+          <label for="budgetCap">Spending Limit:</label>
+          <input type="number" id="budgetCap" min="0" step="0.01" placeholder="Enter amount">
+        </article>
+        <article class="setting-card theme-card">
+          <h3>Theme</h3>
+          <div class="theme-buttons">
+            <button id="lightTheme" class="theme-btn">Light</button>
+            <button id="darkTheme" class="theme-btn active">Dark</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="data-section" aria-labelledby="data-management-heading">
+      <h2 id="data-management-heading">Data Management</h2>
+      <div class="data-container">
+        <article class="data-card">
+          <h3>Export Data</h3>
+          <p>Download all your transactions and settings as a JSON file.</p>
+          <button id="exportBtn" class="action-btn export-btn">Export to JSON</button>
+        </article>
+        <article class="data-card">
+          <h3>Import Data</h3>
+          <p>Import transactions and settings from a JSON file.</p>
+          <input type="file" id="importFile" accept=".json" style="display: none;">
+          <button id="importBtn" class="action-btn import-btn">Import from JSON</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="reset-section" aria-labelledby="reset-heading">
+      <h2 id="reset-heading">Reset</h2>
+      <div class="reset-container">
+        <article class="reset-card warning">
+          <h3>Reset All Data</h3>
+          <p>This will permanently delete all your transactions and reset settings to default. This action cannot be
+            undone.</p>
+          <button id="resetBtn" class="action-btn reset-btn">Reset Everything</button>
+        </article>
+      </div>
+    </section>
+
+    <div id="statusMessage" class="status-message" role="status" aria-live="polite"></div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 FinTrack. All rights reserved.</p>
+  </footer>
+
+  <script src="Script/constants.js"></script>
+  <script src="Script/data.js"></script>
+  <script src="Script/statistics.js"></script>
+  <script src="Script/settings.js"></script>
+  <script src="Script/transactions.js"></script>
+  <script src="Script/ui.js"></script>
+  <script src="Script/state.js"></script>
+  <script>
+    // Settings Page Functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      // Wait for AppState to initialize
+      setTimeout(() => {
+        if (window.AppState) {
+          loadSettings();
+          setupEventListeners();
+        } else {
+          console.error('AppState not loaded');
+        }
+      }, 100);
+    });
+
+    function loadSettings() {
+      const settings = AppState.getSettings();
+
+      // Load currency
+      document.getElementById('currency').value = settings.currency || 'USD';
+
+      // Load budget cap
+      document.getElementById('budgetCap').value = settings.spendingCap || 1000;
+
+      // Load theme buttons state (theme is applied globally by state.js)
+      const theme = settings.theme || 'light';
+      updateThemeButtons(theme);
+    }
+
+    function setupEventListeners() {
+      // Currency change
+      document.getElementById('currency').addEventListener('change', (e) => {
+        AppState.updateSettings({ currency: e.target.value });
+        showStatus('Currency updated successfully');
+      });
+
+      // Budget cap change
+      document.getElementById('budgetCap').addEventListener('change', (e) => {
+        const cap = parseFloat(e.target.value) || 0;
+        AppState.updateSettings({ spendingCap: cap });
+        showStatus('Budget cap updated successfully');
+      });
+
+      // Theme buttons - theme is applied globally by AppState.updateSettings
+      document.getElementById('lightTheme').addEventListener('click', () => {
+        AppState.updateSettings({ theme: 'light' });
+        updateThemeButtons('light');
+        showStatus('Theme changed to Light');
+      });
+
+      document.getElementById('darkTheme').addEventListener('click', () => {
+        AppState.updateSettings({ theme: 'dark' });
+        updateThemeButtons('dark');
+        showStatus('Theme changed to Dark');
+      });
+
+      // Export button
+      document.getElementById('exportBtn').addEventListener('click', exportData);
+
+      // Import button
+      document.getElementById('importBtn').addEventListener('click', () => {
+        document.getElementById('importFile').click();
+      });
+
+      document.getElementById('importFile').addEventListener('change', importData);
+
+      // Reset button
+      document.getElementById('resetBtn').addEventListener('click', resetData);
+    }
+
+    function updateThemeButtons(theme) {
+      const lightBtn = document.getElementById('lightTheme');
+      const darkBtn = document.getElementById('darkTheme');
+
+      if (theme === 'light') {
+        lightBtn.classList.add('active');
+        darkBtn.classList.remove('active');
+      } else {
+        lightBtn.classList.remove('active');
+        darkBtn.classList.add('active');
+      }
+    }
+
+    function exportData() {
+      const data = AppState.exportData();
+      const dataStr = JSON.stringify(data, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(dataBlob);
+      link.download = `fintrack_backup_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showStatus('Data exported successfully');
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          let data = JSON.parse(e.target.result);
+
+          // Validate the data format
+          if (!data || typeof data !== 'object') {
+            alert('Error importing data: Invalid JSON format. Expected an object with transactions array.');
+            return;
+          }
+
+          // Handle both formats: {transactions: [...], settings: {...}} or just [...]
+          if (Array.isArray(data)) {
+            // It's just an array of transactions - wrap it
+            data = { transactions: data };
+          }
+
+          // Validate transactions is an array if present
+          if (data.transactions && !Array.isArray(data.transactions)) {
+            alert('Error importing data: "transactions" must be an array.');
+            return;
+          }
+
+          // Validate each transaction has required fields
+          if (data.transactions && data.transactions.length > 0) {
+            const requiredFields = ['id', 'description', 'amount', 'category', 'date'];
+            const firstTxn = data.transactions[0];
+            const hasAllFields = requiredFields.every(field => firstTxn.hasOwnProperty(field));
+
+            if (!hasAllFields) {
+              alert('Error importing data: Each transaction must have id, description, amount, category, and date fields.');
+              return;
+            }
+          }
+
+          if (confirm('This will replace all your current data. Are you sure?')) {
+            AppState.importData(data);
+            loadSettings();
+            showStatus('Data imported successfully! Please refresh the page to see your data.');
+
+            // Optionally auto-refresh after a short delay
+            setTimeout(() => {
+              if (confirm('Refresh the page now to see the imported data?')) {
+                window.location.reload();
+              }
+            }, 500);
+          }
+        } catch (error) {
+          alert('Error importing data: Invalid JSON file - ');
+        }
+      };
+      reader.readAsText(file);
+
+      // Reset file input
+      event.target.value = '';
+    }
+
+    function resetData() {
+      if (confirm('WARNING: This will permanently delete ALL your data. This action cannot be undone. Are you absolutely sure?')) {
+        if (confirm('Are you really sure? All transactions will be lost forever.')) {
+          AppState.resetData();
+          loadSettings();
+          showStatus('All data has been reset');
+        }
+      }
+    }
+
+    function showStatus(message) {
+      const statusEl = document.getElementById('statusMessage');
+      statusEl.textContent = message;
+      statusEl.style.display = 'block';
+      statusEl.classList.add('show');
+
+      setTimeout(() => {
+        statusEl.classList.remove('show');
+        setTimeout(() => {
+          statusEl.style.display = 'none';
+        }, 300);
+      }, 3000);
+    }
+  </script>
+</body>
+
+</html>

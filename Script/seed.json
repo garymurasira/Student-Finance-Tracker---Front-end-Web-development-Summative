@@ -1,0 +1,110 @@
+[
+  {
+    "id": "txn_001",
+    "description": "Lunch at cafeteria",
+    "amount": 12.50,
+    "category": "Food",
+    "date": "2026-02-19",
+    "createdAt": "2026-02-19T10:15:00Z",
+    "updatedAt": "2026-02-19T10:15:00Z"
+  },
+  {
+    "id": "txn_002",
+    "description": "Coffee with classmates",
+    "amount": 3.75,
+    "category": "Food",
+    "date": "2026-02-18",
+    "createdAt": "2026-02-18T09:20:00Z",
+    "updatedAt": "2026-02-18T09:20:00Z"
+  },
+  {
+    "id": "txn_003",
+    "description": "Bus pass renewal",
+    "amount": 45.00,
+    "category": "Transport",
+    "date": "2026-02-17",
+    "createdAt": "2026-02-17T07:45:00Z",
+    "updatedAt": "2026-02-17T07:45:00Z"
+  },
+  {
+    "id": "txn_004",
+    "description": "Tea and snacks",
+    "amount": 5.20,
+    "category": "Food",
+    "date": "2026-02-16",
+    "createdAt": "2026-02-16T14:10:00Z",
+    "updatedAt": "2026-02-16T14:10:00Z"
+  },
+  {
+    "id": "txn_005",
+    "description": "Movie night entertainment",
+    "amount": 14.99,
+    "category": "Entertainment",
+    "date": "2026-02-15",
+    "createdAt": "2026-02-15T20:30:00Z",
+    "updatedAt": "2026-02-15T20:30:00Z"
+  },
+  {
+    "id": "txn_006",
+    "description": "Printing assignment copies",
+    "amount": 6.00,
+    "category": "Fees",
+    "date": "2026-02-14",
+    "createdAt": "2026-02-14T11:00:00Z",
+    "updatedAt": "2026-02-14T11:00:00Z"
+  },
+  {
+    "id": "txn_007",
+    "description": "Coffee coffee break",
+    "amount": 2.50,
+    "category": "Food",
+    "date": "2026-02-13",
+    "createdAt": "2026-02-13T16:40:00Z",
+    "updatedAt": "2026-02-13T16:40:00Z"
+  },
+  {
+    "id": "txn_008",
+    "description": "Chemistry textbook purchase",
+    "amount": 89.99,
+    "category": "Books",
+    "date": "2026-02-10",
+    "createdAt": "2026-02-10T13:25:00Z",
+    "updatedAt": "2026-02-10T13:25:00Z"
+  },
+  {
+    "id": "txn_009",
+    "description": "Notebook and pens",
+    "amount": 7.45,
+    "category": "Books",
+    "date": "2026-02-08",
+    "createdAt": "2026-02-08T10:05:00Z",
+    "updatedAt": "2026-02-08T10:05:00Z"
+  },
+  {
+    "id": "txn_010",
+    "description": "Weekend football ticket",
+    "amount": 25.00,
+    "category": "Entertainment",
+    "date": "2026-02-05",
+    "createdAt": "2026-02-05T18:10:00Z",
+    "updatedAt": "2026-02-05T18:10:00Z"
+  },
+  {
+    "id": "txn_011",
+    "description": "Transport fuel contribution",
+    "amount": 10.00,
+    "category": "Transport",
+    "date": "2026-01-30",
+    "createdAt": "2026-01-30T08:55:00Z",
+    "updatedAt": "2026-01-30T08:55:00Z"
+  },
+  {
+    "id": "txn_012",
+    "description": "Online course materials",
+    "amount": 120.00,
+    "category": "Fees",
+    "date": "2026-01-25",
+    "createdAt": "2026-01-25T12:00:00Z",
+    "updatedAt": "2026-01-25T12:00:00Z"
+  }
+]

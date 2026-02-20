@@ -1,0 +1,40 @@
+<!-- Navbar Component - Include in all pages. Note: About page is now index.html -->
+<!-- Skip Link -->
+<a href="#main-content" class="skip-link">Skip to Content</a>
+
+<!-- Navigation -->
+<nav>
+  <span><img class="logo" src="./assets/logo.png" alt="logo" width="55px"></span>
+  <h1>FinTrack</h1>
+  <ul class="nav-links">
+    <li><a href="./Dashboard.html">Dashboard</a></li>
+    <li><a href="./Transaction.html">Transactions</a></li>
+    <li><a href="./index.html">About</a></li>
+    <li><a href="./Settings.html">Settings</a></li>
+  </ul>
+  <div class="hamburger-menu" id="hamburgerMenu" aria-label="Menu" role="button" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<!-- Menu Overlay -->
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- Sliding Panel -->
+<div class="sliding-panel" id="slidingPanel">
+  <div class="panel-header">
+    <h2>Menu</h2>
+    <button class="close-btn" id="closeBtn" aria-label="Close menu">&times;</button>
+  </div>
+  <ul class="menu-links">
+    <li><a href="./Dashboard.html">Dashboard</a></li>
+    <li><a href="./Transaction.html">Transactions</a></li>
+    <li><a href="./index.html">About</a></li>
+    <li><a href="./Settings.html">Settings</a></li>
+  </ul>
+</div>
+
+<!-- ARIA Live Region for Accessibility Announcements -->
+<div id="app-announcer" class="aria-live-region" aria-live="polite" aria-atomic="true"></div>

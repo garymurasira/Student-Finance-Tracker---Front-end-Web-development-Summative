@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tests - FinTrack</title>
+  <style>
+    /* CSS Reset - isolate from other pages */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      color: #333;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #2c3e50;
+    }
+
+    .test-section {
+      padding: 20px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .test-nav {
+      margin: 20px 0;
+    }
+
+    .test-nav button {
+      margin: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .test-nav button.active {
+      background: #4a6fa5;
+      color: white;
+    }
+
+    .test-card {
+      background: #f5f5f5;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .test-input {
+      padding: 8px;
+      width: 250px;
+      margin: 5px 0;
+    }
+
+    .test-btn {
+      padding: 8px 15px;
+      background: #4a6fa5;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .test-btn.secondary {
+      background: #666;
+    }
+
+    .pass {
+      color: green;
+      font-weight: bold;
+    }
+
+    .fail {
+      color: red;
+      font-weight: bold;
+    }
+
+    .test-result {
+      margin: 10px 0;
+      padding: 10px;
+      background: white;
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background: #4a6fa5;
+      color: white;
+    }
+
+    .json-display {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      overflow-x: auto;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+
+    .aria-live-region {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .focus-test:focus {
+      outline: 3px solid #4a6fa5;
+      outline-offset: 2px;
+    }
+
+    .error-message {
+      color: red;
+      margin: 10px 0;
+    }
+
+    mark {
+      background: yellow;
+      padding: 2px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Testing Section</h1>
+
+  <!-- 1. Regex Validation Tests -->
+  <section id="regex-test" class="test-section">
+    <h2>1. Regex Validation Tests</h2>
+    <div class="test-card">
+      <h3>Description (no leading/trailing spaces, collapse doubles)</h3>
+      <input type="text" id="regex-description" class="test-input" value="  Test  description  ">
+      <button onclick="runDescriptionTest()" class="test-btn">Test</button>
+      <div id="regex-description-result" class="test-result"></div>
+    </div>
+    <div class="test-card">
+      <h3>Amount (numeric, up to 2 decimals)</h3>
+      <input type="text" id="regex-amount" class="test-input" value="123.45">
+      <button onclick="runAmountTest()" class="test-btn">Test</button>
+      <div id="regex-amount-result" class="test-result"></div>
+    </div>
+    <div class="test-card">
+      <h3>Date (YYYY-MM-DD)</h3>
+      <input type="text" id="regex-date" class="test-input" value="2026-02-19">
+      <button onclick="runDateTest()" class="test-btn">Test</button>
+      <div id="regex-date-result" class="test-result"></div>
+    </div>
+    <div class="test-card">
+      <h3>Category (letters, spaces, hyphens)</h3>
+      <input type="text" id="regex-category" class="test-input" value="Food-Hygiene">
+      <button onclick="runCategoryTest()" class="test-btn">Test</button>
+      <div id="regex-category-result" class="test-result"></div>
+    </div>
+    <div class="test-card">
+      <h3>Duplicate Word Detection</h3>
+      <input type="text" id="regex-duplicate" class="test-input" value="coffee coffee break">
+      <button onclick="runDuplicateTest()" class="test-btn">Test</button>
+      <div id="regex-duplicate-result" class="test-result"></div>
+    </div>
+    <button onclick="runAllRegexTests()" class="test-btn">Run All Tests</button>
+    <div id="regex-summary" class="test-result"></div>
+  </section>
+
+  <!-- 2. Search & Highlight Tests -->
+  <section id="search-test" class="test-section">
+    <h2>2. Search & Highlight Tests</h2>
+    <div class="test-card">
+      <h3>Sample Records</h3>
+      <div id="search-records">
+        <p>Record 1: Lunch at cafeteria - $12.50 - Food - 2026-02-19</p>
+        <p>Record 2: Coffee with classmates - $3.75 - Food - 2026-02-18</p>
+        <p>Record 3: Bus pass renewal - $45.00 - Transport - 2026-02-17</p>
+        <p>Record 4: Tea and snacks - $5.20 - Food - 2026-02-16</p>
+        <p>Record 5: Movie night entertainment - $14.99 - Entertainment - 2026-02-15</p>
+      </div>
+    </div>
+    <div class="test-card">
+      <label>Enter Regex Pattern: <input type="text" id="search-pattern" class="test-input" value="coffee|food"></label>
+      <button onclick="runSearchTest()" class="test-btn">Search & Highlight</button>
+      <button onclick="clearSearch()" class="test-btn secondary">Clear</button>
+      <div id="search-error" class="error-message"></div>
+    </div>
+    <div class="test-card">
+      <h3>Highlighted Results</h3>
+      <div id="highlighted-results"></div>
+    </div>
+  </section>
+
+  <!-- 3. Sorting & Rendering Tests -->
+  <section id="sorting-test" class="test-section">
+    <h2>3. Sorting & Rendering Tests</h2>
+    <div>
+      <button onclick="sortTable('date')" class="test-btn">Sort by Date</button>
+      <button onclick="sortTable('description')" class="test-btn">Sort by Description</button>
+      <button onclick="sortTable('amount')" class="test-btn">Sort by Amount (↑)</button>
+      <button onclick="sortTable('amount-desc')" class="test-btn">Sort by Amount (↓)</button>
+      <button onclick="resetSort()" class="test-btn secondary">Reset</button>
+    </div>
+    <table id="sorting-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody id="sorting-tbody"></tbody>
+    </table>
+  </section>
+
+  <!-- 4. Persistence Tests -->
+  <section id="persistence-test" class="test-section">
+    <h2>4. Persistence Tests</h2>
+    <div>
+      <button onclick="saveToLocalStorage()" class="test-btn">Save Mock Data</button>
+      <button onclick="loadFromLocalStorage()" class="test-btn">Load from Storage</button>
+      <button onclick="clearStorage()" class="test-btn secondary">Clear Storage</button>
+    </div>
+    <div class="test-card">
+      <pre id="mock-data-display" class="json-display">[
+  {"id": "test_001", "description": "Test Transaction 1", "amount": 50.00, "category": "Test", "date": "2026-02-20"},
+  {"id": "test_002", "description": "Test Transaction 2", "amount": 25.50, "category": "Test", "date": "2026-02-19"}
+]</pre>
+    </div>
+    <div class="test-card">
+      <h3>Loaded Data</h3>
+      <pre id="loaded-data-display" class="json-display">No data loaded.</pre>
+    </div>
+    <div id="persistence-result" class="test-result"></div>
+  </section>
+
+  <!-- 5. Import/Export Validation -->
+  <section id="import-export-test" class="test-section">
+    <h2>5. Import/Export Validation</h2>
+    <div class="test-card">
+      <h3>Import JSON File</h3>
+      <input type="file" id="json-file-input" accept=".json">
+      <button onclick="validateImport()" class="test-btn">Validate & Import</button>
+      <div id="import-result" class="test-result"></div>
+    </div>
+    <div class="test-card">
+      <h3>Export Current State</h3>
+      <button onclick="exportState()" class="test-btn">Export to JSON</button>
+      <pre id="export-display" class="json-display"></pre>
+    </div>
+  </section>
+
+  <script src="Script/constants.js"></script>
+  <script src="Script/data.js"></script>
+  <script src="Script/statistics.js"></script>
+  <script src="Script/settings.js"></script>
+  <script src="Script/transactions.js"></script>
+  <script src="Script/state.js"></script>
+
+  <script>
+    const MOCK_DATA = [
+      { id: "test_001", description: "Test Transaction 1", amount: 50.00, category: "Test", date: "2026-02-20" },
+      { id: "test_002", description: "Test Transaction 2", amount: 25.50, category: "Test", date: "2026-02-19" }
+    ];
+
+    const SAMPLE_TRANSACTIONS = [
+      { date: "2026-02-19", description: "Lunch at cafeteria", category: "Food", amount: 12.50 },
+      { date: "2026-02-18", description: "Coffee with classmates", category: "Food", amount: 3.75 },
+      { date: "2026-02-17", description: "Bus pass renewal", category: "Transport", amount: 45.00 },
+      { date: "2026-02-16", description: "Tea and snacks", category: "Food", amount: 5.20 },
+      { date: "2026-02-15", description: "Movie night entertainment", category: "Entertainment", amount: 14.99 }
+    ];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function () {
+      initTestTabs();
+      renderSortingTable();
+      document.getElementById('highlighted-results').innerHTML = document.getElementById('search-records').innerHTML;
+    });
+
+    function initTestTabs() {
+      document.querySelectorAll('.test-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.test + '-test').classList.add('active');
+        });
+      });
+    }
+
+    function announceMessage(msg) {
+      document.getElementById('aria-live-region').textContent = msg;
+      document.getElementById('aria-test-result').textContent = msg;
+    }
+
+    // Regex Tests
+    function setResult(id, pass, msg) {
+      const el = document.getElementById(id);
+      el.textContent = msg;
+      el.className = 'test-result ' + (pass ? 'pass' : 'fail');
+      return pass;
+    }
+
+    function runDescriptionTest() {
+      const val = document.getElementById('regex-description').value;
+      const trimmed = val.trim();
+      const collapsed = trimmed.replace(/\s+/g, ' ');
+      const pass = trimmed === val && collapsed === trimmed;
+      const sanitized = collapsed;
+      return setResult('regex-description-result', pass, pass ? '✓ PASS' : '✗ FAIL - Sanitized: "' + sanitized + '"');
+    }
+
+    function runAmountTest() {
+      const val = document.getElementById('regex-amount').value;
+      const pass = /^\d+(\.\d{1,2})?$/.test(val);
+      return setResult('regex-amount-result', pass, pass ? '✓ PASS' : '✗ FAIL');
+    }
+
+    function runDateTest() {
+      const val = document.getElementById('regex-date').value;
+      const pass = /^\d{4}-\d{2}-\d{2}$/.test(val);
+      return setResult('regex-date-result', pass, pass ? '✓ PASS' : '✗ FAIL');
+    }
+
+    function runCategoryTest() {
+      const val = document.getElementById('regex-category').value;
+      const pass = /^[a-zA-Z\s-]+$/.test(val);
+      return setResult('regex-category-result', pass, pass ? '✓ PASS' : '✗ FAIL');
+    }
+
+    function runDuplicateTest() {
+      const val = document.getElementById('regex-duplicate').value.toLowerCase();
+      const words = val.split(/\s+/);
+      const dups = words.filter((w, i) => words.indexOf(w) !== i);
+      const pass = dups.length > 0;
+      return setResult('regex-duplicate-result', pass, pass ? '✓ PASS: ' + [...new Set(dups)].join(', ') : '✗ FAIL');
+    }
+
+    function runAllRegexTests() {
+      const results = [runDescriptionTest(), runAmountTest(), runDateTest(), runCategoryTest(), runDuplicateTest()];
+      const passed = results.filter(r => r).length;
+      document.getElementById('regex-summary').textContent = `Summary: ${passed}/5 passed`;
+      document.getElementById('regex-summary').className = 'test-result ' + (passed === 5 ? 'pass' : 'fail');
+      announceMessage(`Regex tests complete. ${passed} of 5 passed.`);
+    }
+
+    // Search Tests
+    function runSearchTest() {
+      const pattern = document.getElementById('search-pattern').value;
+      const records = document.getElementById('search-records').innerHTML;
+      const resultsContainer = document.getElementById('highlighted-results');
+      const errorContainer = document.getElementById('search-error');
+      errorContainer.textContent = '';
+      resultsContainer.innerHTML = records;
+      try {
+        const regex = new RegExp('(' + pattern + ')', 'gi');
+        resultsContainer.querySelectorAll('p').forEach(p => {
+          p.innerHTML = p.textContent.replace(regex, '<mark>$1</mark>');
+        });
+        announceMessage('Search complete');
+      } catch (e) {
+        errorContainer.textContent = 'Error: ' + e.message;
+        announceMessage('Invalid regex');
+      }
+    }
+
+    function clearSearch() {
+      document.getElementById('highlighted-results').innerHTML = document.getElementById('search-records').innerHTML;
+      document.getElementById('search-error').textContent = '';
+    }
+
+    // Sorting Tests
+    function renderSortingTable(data = SAMPLE_TRANSACTIONS) {
+      document.getElementById('sorting-tbody').innerHTML = data.map(t =>
+        '<tr><td>' + t.date + '</td><td>' + t.description + '</td><td>' + t.category + '</td><td>' + t.amount.toFixed(2) + '</td></tr>'
+      ).join('');
+    }
+
+    function sortTable(field) {
+      let sorted = [...SAMPLE_TRANSACTIONS];
+      if (field === 'date') sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+      else if (field === 'description') sorted.sort((a, b) => a.description.localeCompare(b.description));
+      else if (field === 'amount') sorted.sort((a, b) => a.amount - b.amount);
+      else if (field === 'amount-desc') sorted.sort((a, b) => b.amount - a.amount);
+      renderSortingTable(sorted);
+      announceMessage('Sorted by ' + field);
+    }
+
+    function resetSort() { renderSortingTable(); announceMessage('Sort reset'); }
+
+    // Persistence Tests
+    function saveToLocalStorage() {
+      localStorage.setItem('test_transactions', JSON.stringify(MOCK_DATA));
+      setResult('persistence-result', true, '✓ PASS: Data saved to localStorage');
+      announceMessage('Data saved to localStorage');
+    }
+
+    function loadFromLocalStorage() {
+      const data = localStorage.getItem('test_transactions');
+      const display = document.getElementById('loaded-data-display');
+      if (data) {
+        display.textContent = data;
+        setResult('persistence-result', true, '✓ PASS: Data loaded from localStorage');
+        announceMessage('Data loaded from localStorage');
+      } else {
+        display.textContent = 'No data found';
+        setResult('persistence-result', false, '✗ FAIL: No data in localStorage');
+      }
+    }
+
+    function clearStorage() {
+      localStorage.removeItem('test_transactions');
+      document.getElementById('loaded-data-display').textContent = 'No data loaded.';
+      setResult('persistence-result', true, '✓ PASS: Storage cleared');
+      announceMessage('Storage cleared');
+    }
+
+    // Import/Export Tests
+    function validateImport() {
+      const fileInput = document.getElementById('json-file-input');
+      const result = document.getElementById('import-result');
+      if (fileInput.files.length === 0) {
+        result.textContent = '✗ FAIL: No file selected';
+        result.className = 'test-result fail';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          const valid = data.transactions && Array.isArray(data.transactions);
+          result.textContent = valid ? '✓ PASS: Valid JSON structure' : '✗ FAIL: Invalid structure';
+          result.className = 'test-result ' + (valid ? 'pass' : 'fail');
+          announceMessage(valid ? 'Import validated' : 'Import failed');
+        } catch (err) {
+          result.textContent = '✗ FAIL: Invalid JSON - ' + err.message;
+          result.className = 'test-result fail';
+        }
+      };
+      reader.readAsText(fileInput.files[0]);
+    }
+
+    function exportState() {
+      const exportData = { transactions: MOCK_DATA, settings: { currency: 'RWF', spendingCap: 1000 }, exportDate: new Date().toISOString() };
+      document.getElementById('export-display').textContent = JSON.stringify(exportData, null, 2);
+      announceMessage('State exported');
+    }
+  </script>
+</body>
+
+</html>

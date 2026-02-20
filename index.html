@@ -1,0 +1,169 @@
+<!-- About Page - Main entry point (index.html) -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us</title>
+  <link rel="stylesheet" href="./styles/navbar.css">
+  <link rel="stylesheet" href="./styles/About.css">
+</head>
+
+
+<body>
+  <!-- Skip to Content Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <nav>
+    <span><img class="logo" src="./assets/logo.png" alt="logo" width="55px"></span>
+    <h1>FinTrack</h1>
+
+    <!-- Desktop Navigation Links -->
+    <ul class="nav-links">
+      <li><a href="./Dashboard.html">Dashboard</a></li>
+      <li><a href="./Transaction.html">Transactions</a></li>
+      <li><a href="./index.html" class="active">About</a></li>
+      <li><a href="./Settings.html">Settings</a></li>
+    </ul>
+
+    <!-- Mobile Hamburger Menu -->
+    <div class="hamburger-menu" id="hamburgerMenu" aria-label="Menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="sliding-panel" id="slidingPanel">
+      <div class="panel-header">
+        <h2>Menu</h2>
+        <button class="close-btn" id="closeBtn">&times;</button>
+      </div>
+      <ul class="menu-links">
+        <li><a href="./Dashboard.html">Dashboard</a></li>
+        <li><a href="./Transaction.html">Transactions</a></li>
+        <li><a href="./index.html" class="active">About</a></li>
+        <li><a href="./Settings.html">Settings</a></li>
+      </ul>
+    </div>
+  </nav>
+  <hr>
+
+  <main id="main-content" class="container">
+    <section class="about-container" aria-labelledby="purpose-heading">
+      <div class="about-card purpose-card">
+        <h2 id="purpose-heading">Purpose</h2>
+        <p>This Student Finance Tracker is a responsive web application designed to help students record, organize, and
+          analyze their daily expenses.
+          It enables users to manage transactions, monitor spending trends, and search financial records to make better
+          budgeting decisions. The application focuses on usability, accessibility,
+          and reliable data management to provide a simple and practical personal
+          finance experience.</p>
+      </div>
+      <aside class="about-card image-card" aria-label="Image slider">
+        <figure class="image-slider">
+          <img src="./assets/1.1-Create-a-Budget.jpg" alt="Budget" class="slide active">
+          <img src="./assets/loans.jpg" alt="Loans" class="slide">
+          <img src="./assets/managing-student-loans.jpg" alt="Managing Loans" class="slide">
+          <figcaption>Financial management tools for students</figcaption>
+        </figure>
+      </aside>
+    </section>
+
+    <!-- Feedback Section -->
+    <section class="feedback-section" aria-labelledby="feedback-heading">
+      <h2 id="feedback-heading">Feedback from Top Users</h2>
+      <div class="feedback-container">
+        <article class="feedback-card" aria-label="User feedback by Gary Murasira">
+          <div class="user-info">
+            <img src="./assets/default_profile_pic.png" alt="Profile" class="profile-pic">
+            <span class="user-name">Dan Bizimana</span>
+          </div>
+          <p class="feedback-text">The Finance Tracker makes it really easy to see where my money goes each week.
+            I especially like the dashboard because it gives a quick summary without needing to open every transaction.
+            Adding expenses is simple and fast, which helps me stay consistent.</p>
+        </article>
+        <article class="feedback-card" aria-label="User feedback by Gary Murasira">
+          <div class="user-info">
+            <img src="./assets/default_profile_pic.png" alt="Profile" class="profile-pic">
+            <span class="user-name">John Mutabazi</span>
+          </div>
+          <p class="feedback-text">I appreciate how clean and organized the interface feels.
+            The search feature helped me quickly find past purchases, and the category system makes budgeting much
+            clearer.
+            It works well both on my phone and laptop.</p>
+        </article>
+        <article class="feedback-card" aria-label="User feedback by Gary Murasira">
+          <div class="user-info">
+            <img src="./assets/default_profile_pic.png" alt="Profile" class="profile-pic">
+            <span class="user-name">Garrick Jean De Dieu</span>
+          </div>
+          <p class="feedback-text">The spending statistics are very helpful for understanding my habits.
+            Seeing the weekly trend motivated me to reduce unnecessary expenses.
+            The app feels lightweight and responsive, which makes it enjoyable to use daily.</p>
+        </article>
+        <article class="feedback-card" aria-label="User feedback by Gary Murasira">
+          <div class="user-info">
+            <img src="./assets/default_profile_pic.png" alt="Profile" class="profile-pic">
+            <span class="user-name">Moise Nterimbere</span>
+          </div>
+          <p class="feedback-text">What stood out to me most was the accessibility and ease of navigation using only the
+            keyboard.
+            The layout is straightforward, and editing or deleting transactions is simple.
+            It feels like a practical tool students can actually rely on.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Personal/Contact Info Section -->
+    <section class="contact-section" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Personal/Contact Info</h2>
+      <div class="contact-container">
+        <address class="contact-card">
+          <div class="contact-item">
+            <span class="contact-label">Name:</span>
+            <span class="contact-value">Gary Murasira</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Occupation:</span>
+            <span class="contact-value">Full Stack Developer</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Github:</span>
+            <a href="https://github.com/username" target="_blank"
+              class="contact-link">https://github.com/garymurasira</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Email:</span>
+            <a href="mailto:exampleEmail@gmail.com" class="contact-link">g.murasira@alustudent.com</a>
+          </div>
+        </address>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 FinTrack. All rights reserved.</p>
+  </footer>
+
+  <script src="Script/constants.js"></script>
+  <script src="Script/data.js"></script>
+  <script src="Script/statistics.js"></script>
+  <script src="Script/settings.js"></script>
+  <script src="Script/transactions.js"></script>
+  <script src="Script/ui.js"></script>
+  <script src="Script/state.js"></script>
+  <script>
+    // Initialize UI components when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize navbar (hamburger menu functionality)
+      if (window.AppStateUI) {
+        AppStateUI.initNavbar();
+        AppStateUI.initImageSlider();
+      }
+    });
+  </script>
+
+</body>
+
+</html>

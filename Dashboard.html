@@ -1,0 +1,288 @@
+<!-- Dashboard Page -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="./styles/Dashboard.css">
+  <link rel="stylesheet" href="./styles/navbar.css">
+</head>
+
+<body>
+  <!-- header -->
+  <nav>
+    <span><img class="logo" src="./assets/logo.png" alt="logo" width="55px"></span>
+    <h1>FinTrack</h1>
+
+    <!-- Desktop Navigation Links -->
+    <ul class="nav-links">
+      <li><a href="./Dashboard.html" class="active">Dashboard</a></li>
+      <li><a href="./Transaction.html">Transactions</a></li>
+      <li><a href="./index.html">About</a></li>
+      <li><a href="./Settings.html">Settings</a></li>
+    </ul>
+
+    <!-- Mobile Hamburger Menu -->
+    <div class="hamburger-menu" id="hamburgerMenu" aria-label="Menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="sliding-panel" id="slidingPanel">
+      <div class="panel-header">
+        <h2>Menu</h2>
+        <button class="close-btn" id="closeBtn">&times;</button>
+      </div>
+      <ul class="menu-links">
+        <li><a href="./Dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="./Transaction.html">Transactions</a></li>
+        <li><a href="./index.html">About</a></li>
+        <li><a href="./Settings.html">Settings</a></li>
+      </ul>
+    </div>
+  </nav>
+  <hr>
+
+  <main class="container">
+    <section class="stats-container" aria-labelledby="budget-heading">
+      <section class="budget-section" aria-labelledby="budget-heading">
+        <h2 id="budget-heading">Budget</h2>
+        <div class="budget-cap-info">
+          <div class="budget-info">
+            <p>Budget Cap: <span id="budgetCap">10000</span></p>
+            <p>Total Spent: <span id="totalSpent">0</span></p>
+            <p>Remaining: <span id="remaining">0</span></p>
+            <p>Current Percentage: <span id="percentage">0%</span></p>
+          </div>
+          <figure class="circular-progress" aria-label="Budget progress indicator">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Circular progress chart showing budget usage">
+              <circle class="background" cx="50" cy="50" r="40"></circle>
+              <circle class="progress" id="progressCircle" cx="50" cy="50" r="40"></circle>
+            </svg>
+            <figcaption>
+              <span class="percentage-text" id="percentageText">0%</span>
+            </figcaption>
+          </figure>
+        </div>
+        <div id="budgetWarning" class="budget-warning" style="display: none;" role="alert" aria-live="polite">
+          Spending limit exceeded!
+        </div>
+      </section>
+
+
+      <section class="finOverview-section" aria-labelledby="overview-heading">
+        <h2 id="overview-heading">Financial Overview</h2>
+        <div class="overview-cards">
+          <article class="card" aria-label="Total spending">
+            <h3>Total Spending</h3>
+            <p id="statTotalSpending">0</p>
+          </article>
+          <article class="card" aria-label="Transaction count">
+            <h3>Transactions</h3>
+            <p id="statTransactionCount">0</p>
+          </article>
+          <article class="card" aria-label="Top category">
+            <h3>Top Category</h3>
+            <p id="statTopCategory">None</p>
+          </article>
+          <article class="card" aria-label="Average spend">
+            <h3>Average Spend</h3>
+            <p id="statAverageSpend">0</p>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <!-- TRENDS -->
+    <section class="trends" aria-labelledby="trends-heading">
+      <h2 id="trends-heading" style="padding: 15px;">Trends (Last 7 Days)</h2>
+      <figure class="trend-bar-graph" id="trendGraph"
+        aria-label="Bar chart showing spending trends for the last 7 days">
+        <!-- Bars will be rendered dynamically -->
+        <figcaption class="visually-hidden">Spending trends for the last 7 days</figcaption>
+      </figure>
+    </section>
+
+    <!-- RECENT TRANSACTION -->
+    <section class="transactions" id="recentTransactions" aria-labelledby="recent-heading">
+      <h2 id="recent-heading" style="padding: 15px;">Recent Transactions</h2>
+      <div class="recent-transaction-cards" id="recentTransactionCards">
+        <!-- Recent transactions will be rendered here -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 FinTrack. All rights reserved.</p>
+  </footer>
+
+
+  <script src="Script/constants.js"></script>
+  <script src="Script/data.js"></script>
+  <script src="Script/statistics.js"></script>
+  <script src="Script/settings.js"></script>
+  <script src="Script/transactions.js"></script>
+  <script src="Script/ui.js"></script>
+  <script src="Script/state.js"></script>
+  <script>
+    // Dashboard Functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize navbar
+      if (window.AppStateUI) {
+        AppStateUI.initNavbar();
+      }
+
+      // Wait for AppState to initialize
+      setTimeout(() => {
+        if (window.AppState) {
+          renderDashboard();
+        } else {
+          console.error('AppState not loaded');
+        }
+      }, 100);
+    });
+
+    function renderDashboard() {
+      const stats = AppState.getStats();
+      const settings = AppState.getSettings();
+
+      // Update budget section
+      updateBudgetSection(stats, settings);
+
+      // Update statistics cards
+      updateStatisticsCards(stats);
+
+      // Update trends graph
+      updateTrendsGraph(stats);
+
+      // Update recent transactions
+      updateRecentTransactions();
+
+      // Check spending limit
+      AppState.checkSpendingLimit();
+    }
+
+    function updateBudgetSection(stats, settings) {
+      const budgetCap = settings.spendingCap || 1000;
+      const totalSpent = stats.totalSpending;
+      const remaining = budgetCap - totalSpent;
+      const percentage = budgetCap > 0 ? (totalSpent / budgetCap) * 100 : 0;
+
+      document.getElementById('budgetCap').textContent = AppState.formatCurrency(budgetCap);
+      document.getElementById('totalSpent').textContent = AppState.formatCurrency(totalSpent);
+      document.getElementById('remaining').textContent = AppState.formatCurrency(remaining);
+      document.getElementById('percentage').textContent = percentage.toFixed(1) + '%';
+
+      // Update circular progress
+      const progressCircle = document.getElementById('progressCircle');
+      const percentageText = document.getElementById('percentageText');
+
+      // Calculate stroke-dashoffset (251.2 is the circumference of circle with r=40)
+      const circumference = 251.2;
+      const clampedPercentage = Math.min(percentage, 100);
+      const offset = circumference - (clampedPercentage / 100) * circumference;
+
+      progressCircle.style.strokeDashoffset = offset;
+      percentageText.textContent = Math.round(percentage) + '%';
+
+      // Color based on percentage
+      if (percentage > 100) {
+        progressCircle.style.stroke = '#e74c3c';
+        document.getElementById('budgetWarning').style.display = 'block';
+      } else if (percentage > 80) {
+        progressCircle.style.stroke = '#f39c12';
+        document.getElementById('budgetWarning').style.display = 'none';
+      } else {
+        progressCircle.style.stroke = '#27ae60';
+        document.getElementById('budgetWarning').style.display = 'none';
+      }
+    }
+
+    function updateStatisticsCards(stats) {
+      document.getElementById('statTotalSpending').textContent = AppState.formatCurrency(stats.totalSpending);
+      document.getElementById('statTransactionCount').textContent = stats.transactionCount;
+      document.getElementById('statTopCategory').textContent = stats.topCategory || 'None';
+      document.getElementById('statAverageSpend').textContent = AppState.formatCurrency(stats.averageSpend);
+    }
+
+    function updateTrendsGraph(stats) {
+      const trendGraph = document.getElementById('trendGraph');
+      trendGraph.innerHTML = '';
+
+      if (!stats.last7DaysTrend || stats.last7DaysTrend.length === 0) {
+        trendGraph.innerHTML = '<p class="no-data">No trend data available</p>';
+        return;
+      }
+
+      // Find max for scaling
+      const maxAmount = Math.max(...stats.last7DaysTrend.map(d => d.amount), 1);
+
+      stats.last7DaysTrend.forEach(day => {
+        const heightPercentage = (day.amount / maxAmount) * 100;
+        const barContainer = document.createElement('div');
+        barContainer.className = 'bar-container';
+
+        barContainer.innerHTML = `
+          <div class="bar" style="height: ${Math.max(heightPercentage, 5)}%;"></div>
+          <span class="bar-label">${day.dayName}</span>
+          <span class="bar-value">${AppState.formatCurrency(day.amount)}</span>
+        `;
+
+        trendGraph.appendChild(barContainer);
+      });
+    }
+
+    function updateRecentTransactions() {
+      const container = document.getElementById('recentTransactionCards');
+      container.innerHTML = '';
+
+      // Get 3 most recent transactions
+      const transactions = AppState.getAllTransactions('date', 'desc').slice(0, 3);
+
+      if (transactions.length === 0) {
+        container.innerHTML = '<div class="no-transactions">No recent transactions</div>';
+        return;
+      }
+
+      transactions.forEach(transaction => {
+        const card = document.createElement('article');
+        card.className = 'transaction-card';
+
+        card.innerHTML = `
+          <div class="transaction-row">
+            <span class="label">Description</span>
+            <span class="value">${escapeHtml(transaction.description)}</span>
+          </div>
+          <div class="divider"></div>
+          <div class="transaction-row">
+            <span class="label">Amount</span>
+            <span class="value">${AppState.formatCurrency(transaction.amount)}</span>
+          </div>
+          <div class="divider"></div>
+          <div class="transaction-row">
+            <span class="label">Category</span>
+            <span class="value">${escapeHtml(transaction.category)}</span>
+          </div>
+          <div class="divider"></div>
+          <div class="transaction-row">
+            <span class="label">Date</span>
+            <span class="value">${AppState.formatDate(transaction.date)}</span>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+
+</html>

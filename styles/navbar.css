@@ -1,0 +1,365 @@
+/* Shared Navbar Styles for All Pages */
+
+/* Logo Styles */
+.logo {
+  border-radius: 50px;
+}
+
+/* Navigation Container */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #E1D9D1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Desktop Navigation Links - Hidden by default, shown on desktop */
+.nav-links {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 20px;
+}
+
+.nav-links a {
+  display: block;
+  padding: 8px 16px;
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 5px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-links a:hover {
+  background-color: rgba(74, 111, 165, 0.1);
+  color: #4a6fa5;
+}
+
+.nav-links a.active {
+  background-color: rgba(74, 111, 165, 0.15);
+  color: #4a6fa5;
+  font-weight: 600;
+}
+
+/* Hamburger Menu Styles - Shown on mobile, hidden on desktop */
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.hamburger-menu:hover {
+  background-color: rgba(74, 111, 165, 0.1);
+  border-radius: 5px;
+}
+
+.hamburger-menu span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: background-color 0.2s ease;
+}
+
+.hamburger-menu:hover span {
+  background-color: #4a6fa5;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 998;
+}
+
+.menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Sliding Panel */
+.sliding-panel {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 280px;
+  height: 100%;
+  max-height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+  transition: right 0.3s ease;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+
+.sliding-panel.active {
+  right: 0;
+}
+
+/* Panel Header */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #2c3e50;
+}
+
+/* Close Button */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  color: #2c3e50;
+}
+
+/* Menu Links (for sliding panel) */
+.menu-links {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.menu-links li {
+  margin: 0;
+}
+
+.menu-links a {
+  display: block;
+  padding: 15px 20px;
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-left: 4px solid transparent;
+}
+
+.menu-links a:hover {
+  background-color: rgba(74, 111, 165, 0.1);
+  color: #4a6fa5;
+}
+
+/* Active State - Current Page Highlight */
+.menu-links a.active {
+  background-color: rgba(74, 111, 165, 0.15);
+  color: #4a6fa5;
+  border-left-color: #4a6fa5;
+  font-weight: 600;
+}
+
+/* Desktop Styles - Show horizontal nav, hide hamburger */
+@media (min-width: 760px) {
+  .nav-links {
+    display: flex;
+  }
+
+  .hamburger-menu {
+    display: none;
+  }
+}
+
+/* Dark Theme Support */
+body[data-theme="dark"] nav {
+  background-color: #2c3e50;
+}
+
+body[data-theme="dark"] .hamburger-menu span {
+  background-color: white;
+}
+
+body[data-theme="dark"] .hamburger-menu:hover span {
+  background-color: #5dade2;
+}
+
+body[data-theme="dark"] .sliding-panel {
+  background-color: #2c3e50;
+  color: white;
+}
+
+body[data-theme="dark"] .panel-header h2 {
+  color: white;
+}
+
+body[data-theme="dark"] .menu-links a {
+  color: white;
+}
+
+body[data-theme="dark"] .nav-links a {
+  color: #ecf0f1;
+}
+
+body[data-theme="dark"] .nav-links a:hover {
+  background-color: rgba(93, 173, 226, 0.1);
+  color: #5dade2;
+}
+
+body[data-theme="dark"] .nav-links a.active {
+  background-color: rgba(93, 173, 226, 0.15);
+  color: #5dade2;
+}
+
+/* Accessibility - Focus Styles for Keyboard Navigation */
+*:focus {
+  outline: 3px solid #4a6fa5;
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 3px solid #4a6fa5;
+  outline-offset: 2px;
+}
+
+/* Focus styles for links */
+a:focus {
+  outline: 3px solid #4a6fa5;
+  outline-offset: 2px;
+}
+
+/* Focus styles for buttons */
+button:focus {
+  outline: 3px solid #4a6fa5;
+  outline-offset: 2px;
+}
+
+/* Focus styles for inputs */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid #4a6fa5;
+  outline-offset: 2px;
+}
+
+/* Hamburger menu focus */
+.hamburger-menu:focus {
+  outline: 3px solid #4a6fa5;
+  outline-offset: 2px;
+  border-radius: 5px;
+}
+
+/* Nav links focus */
+.nav-links a:focus {
+  outline: 3px solid #4a6fa5;
+  outline-offset: 2px;
+  background-color: rgba(74, 111, 165, 0.2);
+}
+
+/* Menu links focus */
+.menu-links a:focus {
+  outline: 3px solid #4a6fa5;
+  outline-offset: -3px;
+  background-color: rgba(74, 111, 165, 0.2);
+}
+
+/* Close button focus */
+.close-btn:focus {
+  outline: 3px solid #4a6fa5;
+  outline-offset: 2px;
+  border-radius: 5px;
+}
+
+/* Accessibility - Visually hidden but accessible to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Footer Styles */
+footer {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 20px 15px;
+  text-align: center;
+  background-color: #E1D9D1;
+  color: #2c3e50;
+  box-sizing: border-box;
+}
+
+body[data-theme="dark"] footer {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+}
+
+/* Sticky Footer - Keep footer at bottom */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* Skip to Content Link - Accessibility */
+.skip-link {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4a6fa5;
+  color: white;
+  padding: 12px 24px;
+  z-index: 10000;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.skip-link:focus {
+  outline: 3px solid #2c3e50;
+  outline-offset: 2px;
+}

@@ -1,0 +1,295 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #E1D9D1;
+  color: #2c3e50;
+}
+
+/* Container to limit content width */
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Page Title */
+h2 {
+  padding: 15px 15px 10px 15px;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Settings Section */
+.settings-section {
+  padding: 0 15px 15px 15px;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.setting-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.setting-card h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #4a6fa5;
+  padding-bottom: 8px;
+}
+
+.setting-card label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.setting-card select,
+.setting-card input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.setting-card select:focus,
+.setting-card input:focus {
+  outline: none;
+  border-color: #4a6fa5;
+}
+
+/* Theme Buttons */
+.theme-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.theme-btn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.theme-btn.active {
+  border-color: #4a6fa5;
+  background: #4a6fa5;
+  color: white;
+}
+
+.theme-btn:hover {
+  border-color: #4a6fa5;
+}
+
+/* Data Section */
+.data-section {
+  padding: 0 15px 15px 15px;
+}
+
+.data-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.data-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.data-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.data-card p {
+  margin: 0 0 15px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.export-btn {
+  background: #27ae60;
+  color: white;
+}
+
+.export-btn:hover {
+  background: #219a52;
+}
+
+.import-btn {
+  background: #4a6fa5;
+  color: white;
+}
+
+.import-btn:hover {
+  background: #3d5a8a;
+}
+
+/* Reset Section */
+.reset-section {
+  padding: 0 15px 15px 15px;
+}
+
+.reset-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.reset-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reset-card.warning {
+  border-color: #e74c3c;
+  background: #fdf2f2;
+}
+
+.reset-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+  color: #e74c3c;
+}
+
+.reset-card p {
+  margin: 0 0 15px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.reset-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.reset-btn:hover {
+  background: #c0392b;
+}
+
+/* Status Message */
+.status-message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #27ae60;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.status-message.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Desktop Layout */
+@media (min-width: 760px) {
+  .settings-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .data-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .settings-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Dark Theme Support */
+body[data-theme="dark"] {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+}
+
+body[data-theme="dark"] h2 {
+  color: #ecf0f1;
+}
+
+body[data-theme="dark"] .setting-card,
+body[data-theme="dark"] .data-card,
+body[data-theme="dark"] .reset-card {
+  background: #34495e;
+  border-color: #465669;
+  color: #ecf0f1;
+}
+
+body[data-theme="dark"] .setting-card h3,
+body[data-theme="dark"] .data-card h3 {
+  color: #ecf0f1;
+}
+
+body[data-theme="dark"] .setting-card label,
+body[data-theme="dark"] .data-card p,
+body[data-theme="dark"] .reset-card p {
+  color: #bdc3c7;
+}
+
+body[data-theme="dark"] .setting-card select,
+body[data-theme="dark"] .setting-card input {
+  background: #465669;
+  border-color: #5d6d7e;
+  color: #ecf0f1;
+}
+
+body[data-theme="dark"] .theme-btn {
+  background: #465669;
+  border-color: #5d6d7e;
+  color: #ecf0f1;
+}
+
+body[data-theme="dark"] .theme-btn.active {
+  background: #4a6fa5;
+  border-color: #4a6fa5;
+}
