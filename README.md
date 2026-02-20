@@ -1,5 +1,8 @@
 # Student Finance Tracker
 
+DEMO VIDEO: https://youtu.be/BC5cN7hyRJs
+Github Pages link: https://garymurasira.github.io/Student-Finance-Tracker---Front-end-Web-development-Summative/
+
 A responsive web application designed to help students record, organize, and analyze their daily expenses.
 
 ## Chosen Theme
